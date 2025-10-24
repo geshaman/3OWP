@@ -37,32 +37,11 @@ class GeoObject {
      *
      * @return площиадь в квадратных километрах
      */
-    public int getLength() { return area; }
-
-    /**
-     * Возвращает местоположение объекта.
-     *
-     * @return местоположение
-     */
-    public String getLocation() { return location; }
-
-    /**
-     * Возвращает максимальную глубину объекта.
-     *
-     * @return максимальная глубина
-     */
-    public int getMaxDepth() { return maxDepth; }
-
-    /**
-     * Возвращает год открытия объекта.
-     *
-     * @return год открытия
-     */
-    public int getDiscoveryYear() {return discoveryYear; }
+    public int getArea() { return area; }
 
     /**
      * Печатает информацию об объекте.
-     */
+            */
     public void printInfo() {
         System.out.println("Название: " + name + ", площадь: " + area + " км^2, местоположение: " + location +
                 ", максимальная глубина: " + maxDepth + ", год открытия: " + discoveryYear);

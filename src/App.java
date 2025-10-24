@@ -57,7 +57,16 @@ public class App {
         double coastlineLength = Validator.getNonNegativeDouble(_in, "Введите длину береговой линии (км): ");
         double waterTemperature = Validator.getDouble(_in, "Введите температуру воды (°C): ");
 
-        Lake lake = new Lake(name, area, location, maxDepth, discoveryYear, salinity, isNavigable, hasIslands, coastlineLength, waterTemperature);
+        Lake lake;
+        if (salinity > 1.0) {
+            lake = new SaltLake(name, area, location, maxDepth, discoveryYear, salinity,
+                    isNavigable, hasIslands, coastlineLength, waterTemperature);
+            System.out.println("Создано солёное озеро");
+        } else {
+            lake = new FreshLake(name, area, location, maxDepth, discoveryYear, salinity,
+                    isNavigable, hasIslands, coastlineLength, waterTemperature);
+            System.out.println("Создано пресное озеро");
+        }
         lakes.addLake(lake);
         System.out.println("Озеро успешно добавлено!");
     }

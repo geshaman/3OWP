@@ -31,7 +31,7 @@ public class LakesList {
     public Lake findMaxArea() {
         Lake maxLake = lakes.get(0);
         for (Lake lake : lakes) {
-            if (lake.getLength() > maxLake.getLength()) {
+            if (lake.getArea() > maxLake.getArea()) {
                 maxLake = lake;
             }
         }
@@ -46,7 +46,7 @@ public class LakesList {
     public int findAverageArea() {
         int totalArea = 0;
         for (Lake lake : lakes) {
-            totalArea += lake.getLength();
+            totalArea += lake.getArea();
         }
         return totalArea / lakes.size();
     }
@@ -60,7 +60,7 @@ public class LakesList {
         int avgArea = findAverageArea();
         int count = 0;
         for (Lake lake : lakes) {
-            if (lake.getLength() < avgArea) {
+            if (lake.getArea() < avgArea) {
                 count++;
             }
         }
