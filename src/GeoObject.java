@@ -5,8 +5,8 @@ class GeoObject {
     protected String name;
     protected int area;
     protected String location;
-    protected String maxDepth;
-    protected String discoveryYear;
+    protected int maxDepth;
+    protected int discoveryYear;
 
     /**
      * Конструктор класса.
@@ -17,7 +17,7 @@ class GeoObject {
      * @param maxDepth          Максимальная глубина
      * @param discoveryYear     Год открытия
      */
-    public GeoObject(String name, int area, String location, String maxDepth, String discoveryYear) {
+    public GeoObject(String name, int area, String location, int maxDepth, int discoveryYear) {
         this.name = name;
         this.area = area;
         this.location = location;
@@ -51,14 +51,14 @@ class GeoObject {
      *
      * @return максимальная глубина
      */
-    public String getMaxDepth() { return maxDepth; }
+    public int getMaxDepth() { return maxDepth; }
 
     /**
      * Возвращает год открытия объекта.
      *
      * @return год открытия
      */
-    public String getDiscoveryYear() {return discoveryYear; }
+    public int getDiscoveryYear() {return discoveryYear; }
 
     /**
      * Печатает информацию об объекте.
@@ -100,13 +100,13 @@ class GeoObject {
      *
      * @param maxDepth максимальная глубина
      */
-    public void setMaxDepth(String maxDepth) { this.maxDepth = maxDepth; }
+    public void setMaxDepth(int maxDepth) { this.maxDepth = maxDepth; }
 
     /**
      * Устанавливает новый год открытия объекта.
      *
      * @param discoveryYear год окрытия
      */
-    public void setDiscoveryYear(String discoveryYear) { this.discoveryYear = discoveryYear; }
+    public void setDiscoveryYear(int discoveryYear) { this.discoveryYear = discoveryYear; }
 
 }
