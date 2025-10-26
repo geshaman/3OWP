@@ -1,101 +1,158 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+
 /**
- * Класс, описывающий озеро.
+ * Базовый класс для географических объектов (озёр).
  */
-class Lake extends GeoObject {
-    protected double salinity;           // соленость воды (‰)
-    protected boolean isNavigable;       // судоходное ли озеро
-    protected boolean hasIslands;        // наличие островов
-    protected double coastlineLength;    // длина береговой линии (км)
-    protected double waterTemperature;   // температура воды (°C)
-
+class Lake {
+    private static final ArrayList<Lake> lakes = new ArrayList<>();
+    protected String name;
+    protected int area;
+    protected double salinity;
     /**
-     * Конструктор класса Lake.
+     * Конструктор класса.
      *
-     * @param name              название
-     * @param area              площадь (км²)
-     * @param location          местоположение
-     * @param maxDepth          максимальная глубина
-     * @param discoveryYear     год открытия
-     * @param salinity          соленость воды (‰)
-     * @param isNavigable       судоходное ли озеро
-     * @param hasIslands        наличие островов
-     * @param coastlineLength   длина береговой линии (км)
-     * @param waterTemperature  температура воды (°C)
+     * @param name              Название объекта
+     * @param area              Площадь (км^2)
+     * @param salinity          Соленость (%)
      */
-    public Lake(String name, int area, String location, int maxDepth, int discoveryYear,
-                double salinity, boolean isNavigable, boolean hasIslands, double coastlineLength,
-                double waterTemperature) {
-        super(name, area, location, maxDepth, discoveryYear);
+    public Lake(String name, int area, double salinity) {
+        this.name = name;
+        this.area = area;
         this.salinity = salinity;
-        this.isNavigable = isNavigable;
-        this.hasIslands = hasIslands;
-        this.coastlineLength = coastlineLength;
-        this.waterTemperature = waterTemperature;
     }
 
     /**
-     * Устанавливает соленость воды.
+     * Возвращает название географического объекта.
      *
-     * @param salinity новая соленость воды (должна быть неотрицательной)
+     * @return название
      */
-    public void editSalinity(double salinity) {
-        if (salinity >= 0) {
-            this.salinity = salinity;
-        } else {
-            System.out.println("Соленость воды должна быть неотрицательной!");
+    public String getName() { return name; }
+
+    /**
+     * Возвращает площадь объекта.
+     *
+     * @return площиадь в квадратных километрах
+     */
+    public int getArea() { return area; }
+
+    /**
+     * Устанавливает новое имя объекта.
+     *
+     * @param name имя
+     */
+    public void setName(String name) { this.name = name; }
+
+    /**
+     * Возвращает информацию об озере в виде строки.
+     * @return строка с информацией
+     */
+    public String getInfo() {
+        return "Название: " + name + ", площадь: " + area + " км^2, солёность: " + salinity + " %";
+    }
+
+    /**
+     * Устанавливает новую площадь объекта.
+     *
+     * @param area новая площадь (должна быть положительной)
+     */
+    public void setArea(int area) {
+        if (area > 0) {
+            this.area = area;
         }
     }
 
     /**
-     * Устанавливает температуру воды.
+     * Устанавливает новую максимальную глубину объекта.
      *
-     * @param waterTemperature новая температура воды
+     * @param salinity новое значение солёности
      */
-    public void editWaterTemperature(double waterTemperature) {
-        this.waterTemperature = waterTemperature;
+    public void setSalinity(double salinity) { this.salinity = salinity; }
+
+    /**
+     * Добавляет озеро в список.
+     *
+     * @param lake озеро
+     */
+    public static void addLake(Lake lake) {
+        lakes.add(lake);
     }
 
     /**
-     * Устанавливает судоходность озера.
+     * Находит самое большое озеро по площади.
      *
-     * @param isNavigable судоходное ли озеро
+     * @return самое большое озеро
      */
-    public void setNavigable(boolean isNavigable) {
-        this.isNavigable = isNavigable;
-    }
-
-    /**
-     * Устанавливает наличие островов.
-     *
-     * @param hasIslands наличие островов
-     */
-    public void setHasIslands(boolean hasIslands) {
-        this.hasIslands = hasIslands;
-    }
-
-    /**
-     * Устанавливает длину береговой линии.
-     *
-     * @param coastlineLength новая длина береговой линии (должна быть положительной)
-     */
-    public void editCoastlineLength(double coastlineLength) {
-        if (coastlineLength > 0) {
-            this.coastlineLength = coastlineLength;
-        } else {
-            System.out.println("Длина береговой линии должна быть положительной!");
+    public static Lake findMaxArea() {
+        Lake maxLake = lakes.get(0);
+        for (Lake lake : lakes) {
+            if (lake.getArea() > maxLake.getArea()) {
+                maxLake = lake;
+            }
         }
+        return maxLake;
     }
 
     /**
-     * Печатает информацию об озере.
+     * Вычисляет среднюю площадь озер.
+     *
+     * @return средняя площадь
      */
-    @Override
-    public void printInfo() {
-        super.printInfo();
-        System.out.println("Соленость воды: " + salinity + "‰");
-        System.out.println("Судоходное: " + (isNavigable ? "Да" : "Нет"));
-        System.out.println("Наличие островов: " + (hasIslands ? "Да" : "Нет"));
-        System.out.println("Длина береговой линии: " + coastlineLength + " км");
-        System.out.println("Температура воды: " + waterTemperature + "°C");
+    public static int findAverageArea() {
+        int totalArea = 0;
+        for (Lake lake : lakes) {
+            totalArea += lake.getArea();
+        }
+        return totalArea / lakes.size();
     }
+
+    /**
+     * Подсчитывает количество озер с площадью меньше средней.
+     *
+     * @return количество озер
+     */
+    public static int countLakesWithAreaLessThanAverage() {
+        int avgArea = findAverageArea();
+        int count = 0;
+        for (Lake lake : lakes) {
+            if (lake.getArea() < avgArea) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Сортирует озера по алфавиту и выводит их.
+     */
+    public static ArrayList<Lake> getSortedLakes() {
+        ArrayList<Lake> sorted = new ArrayList<>(lakes);
+        sorted.sort(Comparator.comparing(Lake::getName));
+        return sorted;
+    }
+
+    /**
+     * Возвращает все озера.
+     *
+     * @return список озер
+     */
+    public static ArrayList<Lake> getAll() {
+        return lakes;
+    }
+
+    /**
+     * Ищет озеро по названию.
+     *
+     * @param name название озера
+     * @return найденное озеро или null
+     */
+    public static Lake findByName(String name) {
+        for (Lake lake : lakes) {
+            if (lake.getName().equalsIgnoreCase(name)) {
+                return lake;
+            }
+        }
+        return null;
+    }
+
 }
