@@ -1,167 +1,124 @@
-import java.util.Scanner;
-
 /**
  * Класс для валидации пользовательского ввода.
+ * Содержит методы проверки корректности введённых данных.
  */
 public class Validator {
+
     /**
-     * Запрашивает у пользователя цифру от 0 до 6 с валидацией.
+     * Проверяет, является ли строка валидным выбором пункта меню (0-6).
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return цифра от 0 до 6
+     * @param input введённая пользователем строка
+     * @return true если строка является цифрой от 0 до 6, иначе false
      */
-    public static int getMenuChoice(Scanner sc, String message) {
-        while (true) {
-            System.out.print(message);
-            String input = sc.nextLine().trim();
-
-            if (input.matches("\\d+")) {
-                int choice = Integer.parseInt(input);
-                if (choice >= 0 && choice <= 6) {
-                    return choice;
-                }
-            }
-
-            System.out.println("Ошибка! Пожалуйста, введите цифру от 0 до 6.");
-        }
+    public static boolean isValidMenuChoice(String input) {
+        return input.matches("[0-6]");
     }
 
     /**
-     * Запрашивает у пользователя площадь озера (положительное число).
+     * Проверяет, является ли строка положительным целым числом.
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return положительное число
+     * @param input введённая пользователем строка
+     * @return true если строка содержит только цифры (без знака), иначе false
      */
-    public static int getPositiveInt(Scanner sc, String message) {
-        while (true) {
-            int value = getInt(sc, message);
-            if (value > 0) {
-                return value;
-            }
-            System.out.println("Ошибка! Значение должно быть положительным.");
-        }
+    public static boolean isValidPositiveInt(String input) {
+        return input.matches("\\d+");
     }
 
     /**
-     * Запрашивает у пользователя соленость воды в процентах [0; 100].
+     * Проверяет, является ли строка валидным значением солёности воды (0-100%).
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return соленость в процентах
+     * @param input введённая пользователем строка
+     * @return true если строка представляет число от 0 до 100, иначе false
      */
-    public static double getSalinity(Scanner sc, String message) {
-        while (true) {
-            double value = getDouble(sc, message);
-            if (value >= 0 && value <= 100) {
-                return value;
-            }
-            System.out.println("Ошибка! Соленость должна быть в диапазоне от 0 до 100%.");
-        }
+    public static boolean isValidSalinity(String input) {
+        if (!input.matches("\\d+(\\.\\d+)?")) return false;
+        double value = Double.parseDouble(input);
+        return value >= 0 && value <= 100;
     }
 
     /**
-     * Запрашивает у пользователя неотрицательное вещественное число.
+     * Проверяет, является ли строка неотрицательным вещественным числом.
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return неотрицательное число
+     * @param input введённая пользователем строка
+     * @return true если строка содержит неотрицательное число, иначе false
      */
-    public static double getNonNegativeDouble(Scanner sc, String message) {
-        while (true) {
-            double value = getDouble(sc, message);
-            if (value >= 0) {
-                return value;
-            }
-            System.out.println("Ошибка! Значение не может быть отрицательным.");
-        }
+    public static boolean isValidNonNegativeDouble(String input) {
+        return input.matches("\\d+(\\.\\d+)?");
     }
 
     /**
-     * Запрашивает у пользователя строку с валидацией.
+     * Проверяет, является ли строка валидным текстовым значением.
+     * Текст должен быть непустым и не состоять только из цифр.
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return строка
+     * @param input введённая пользователем строка
+     * @return true если строка не пустая и не является числом, иначе false
      */
-    public static String getString(Scanner sc, String message) {
-        while (true) {
-            System.out.print(message);
-            String input = sc.nextLine().trim();
-            if (!input.isEmpty() && !isNumeric(input)) {
-                return input;
-            }
-            System.out.println("Неправильный формат ввода. Введите строку.");
-        }
+    public static boolean isValidString(String input) {
+        return !input.isEmpty() && !input.matches("-?\\d+(\\.\\d+)?");
     }
 
     /**
-     * Запрашивает у пользователя целое число.
+     * Проверяет, является ли строка целым числом.
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return целое число
+     * @param input введённая пользователем строка
+     * @return true если строка содержит только цифры, иначе false
      */
-    public static int getInt(Scanner sc, String message) {
-        while (true) {
-            System.out.print(message);
-            String input = sc.nextLine().trim();
-            try {
-                return Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Неправильный формат ввода. Введите целое число.");
-            }
-        }
+    public static boolean isValidInt(String input) {
+        return input.matches("-?\\d+");
     }
 
     /**
-     * Запрашивает у пользователя вещественное число.
+     * Проверяет, является ли строка вещественным числом.
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return вещественное число
+     * @param input введённая пользователем строка
+     * @return true если строка содержит число (целое или дробное), иначе false
      */
-    public static double getDouble(Scanner sc, String message) {
-        while (true) {
-            System.out.print(message);
-            String input = sc.nextLine().trim();
-            try {
-                return Double.parseDouble(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Неправильный формат ввода. Введите число с точкой.");
-            }
-        }
+    public static boolean isValidDouble(String input) {
+        return input.matches("-?\\d+(\\.\\d+)?");
     }
 
     /**
-     * Запрашивает у пользователя булево значение (true/false).
+     * Проверяет, является ли строка валидным булевым значением.
+     * Поддерживаются варианты: да/д/yes/y/true/1 и нет/н/no/n/false/0.
      *
-     * @param sc      сканер
-     * @param message сообщение для пользователя
-     * @return булево значение
+     * @param input введённая пользователем строка
+     * @return true если строка распознана как "истина", false если как "ложь"
+     * @throws IllegalArgumentException если строка не является валидным булевым значением
      */
-    public static boolean getBoolean(Scanner sc, String message) {
-        while (true) {
-            System.out.print(message + " (да/нет): ");
-            String input = sc.nextLine().trim().toLowerCase();
-            if (input.equals("да") || input.equals("д") || input.equals("yes") || input.equals("y")) {
-                return true;
-            }
-            else if (input.equals("нет") || input.equals("н") || input.equals("no") || input.equals("n")) {
-                return false;
-            }
-            System.out.println("Неправильный формат ввода. Введите 'да' или 'нет'.");
+    public static boolean parseBoolean(String input) {
+        String lowerInput = input.trim().toLowerCase();
+
+        if (lowerInput.equals("да") || lowerInput.equals("д") ||
+                lowerInput.equals("yes") || lowerInput.equals("y") ||
+                lowerInput.equals("true") || lowerInput.equals("1")) {
+            return true;
         }
+        else if (lowerInput.equals("нет") || lowerInput.equals("н") ||
+                lowerInput.equals("no") || lowerInput.equals("n") ||
+                lowerInput.equals("false") || lowerInput.equals("0")) {
+            return false;
+        }
+
+        throw new IllegalArgumentException("Некорректное булево значение");
     }
 
     /**
-     * Проверяет, является ли строка числом.
+     * Проверяет, является ли строка валидным булевым значением.
+     * Поддерживаются варианты: да/д/yes/y/true/1 и нет/н/no/n/false/0.
      *
-     * @param str строка
-     * @return true, если строка - число
+     * @param input введённая пользователем строка
+     * @return true если строка может быть преобразована в boolean, иначе false
      */
-    private static boolean isNumeric(String str) {
-        return str.matches("-?\\d+(\\.\\d+)?");
+    public static boolean isValidBoolean(String input) {
+        if (input == null) return false;
+
+        String lowerInput = input.trim().toLowerCase();
+
+        return lowerInput.equals("да") || lowerInput.equals("д") ||
+                lowerInput.equals("yes") || lowerInput.equals("y") ||
+                lowerInput.equals("true") || lowerInput.equals("1") ||
+                lowerInput.equals("нет") || lowerInput.equals("н") ||
+                lowerInput.equals("no") || lowerInput.equals("n") ||
+                lowerInput.equals("false") || lowerInput.equals("0");
     }
 }
