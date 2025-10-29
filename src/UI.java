@@ -5,15 +5,7 @@ import java.util.ArrayList;
  * Главный класс приложения для работы со списком озер.
  */
 public class UI {
-    private Scanner _in;
-
-    /**
-     * Конструктор сканер ввода.
-     */
-    public UI(){
-        _in = new Scanner(System.in);
-    }
-
+    private static final Scanner _in = new Scanner(System.in);
 
     /**
      * Печатает информацию о лабораторной работе и задании.
@@ -69,14 +61,8 @@ public class UI {
      * Выводит информацию обо всех озерах в списке.
      */
     private void printAllLakes() {
-        ArrayList<Lake> allLakes = Lake.getAll();
-        if (allLakes.isEmpty()) {
-            System.out.println("Список озер пуст.");
-            return;
-        }
-        for (Lake lake : allLakes) {
-            System.out.println(lake.getInfo());
-        }
+
+        System.out.println(Lake.getAll());
     }
 
     /**
@@ -176,12 +162,7 @@ public class UI {
                     }
                 }
                 case 4 -> System.out.println("Количество озер с площадью меньше средней: " + Lake.countLakesWithAreaLessThanAverage());
-                case 5 -> {
-                    ArrayList<Lake> sortedLakes = Lake.getSortedLakes();
-                    for (Lake lake : sortedLakes){
-                        System.out.println(lake.getInfo());
-                    }
-                }
+                case 5 -> System.out.println(Lake.getSortedLakes());
                 case 6 -> editLake();
                 case 0 -> System.out.println("Выход из программы...");
             }

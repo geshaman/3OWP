@@ -2,15 +2,25 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * Базовый класс для географических объектов (озёр).
+ * Базовый класс озёр.
  */
 class Lake {
     private static final ArrayList<Lake> lakes = new ArrayList<>();
     protected String name;
     protected int area;
     protected double salinity;
+
     /**
-     * Конструктор класса.
+     * Конструктор класса по умолчанию.
+     */
+    public Lake() {
+        this.name = "Undefind";
+        this.area = 0;
+        this.salinity = 0;
+    }
+
+    /**
+     * Параметризированный Конструктор класса.
      *
      * @param name              Название объекта
      * @param area              Площадь (км^2)
@@ -123,21 +133,42 @@ class Lake {
     }
 
     /**
-     * Сортирует озера по алфавиту и выводит их.
+     * Возвращает строку, содержащую информацию о всех озерах, отсортированных в алфавитном порядке.
+     *
+     * @return строка отсортированного списка озер
      */
-    public static ArrayList<Lake> getSortedLakes() {
+    public static String getSortedLakes() {
+        if (lakes.isEmpty()) {
+            return "Список озер пуст.";
+        }
+
         ArrayList<Lake> sorted = new ArrayList<>(lakes);
         sorted.sort(Comparator.comparing(Lake::getName));
-        return sorted;
+
+        String AllLakesInfo = "";
+        for (Lake lake : sorted) {
+            AllLakesInfo += (lake.getInfo() + "\n");
+        }
+
+        return AllLakesInfo;
     }
 
     /**
-     * Возвращает все озера.
+     * Возвращает строку, содержащую информацию о всех озерах.
      *
      * @return список озер
      */
-    public static ArrayList<Lake> getAll() {
-        return lakes;
+    public static String getAll() {
+        if (lakes.isEmpty()) {
+            return "Список озер пуст.";
+        }
+
+        String AllLakesInfo = "";
+        for (Lake lake : lakes) {
+            AllLakesInfo += (lake.getInfo() + "\n");
+        }
+
+        return AllLakesInfo;
     }
 
     /**
