@@ -1,16 +1,23 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 /**
- * Главный класс приложения для работы со списком озер.
+ * Главный класс пользовательского интерфейса приложения для работы со списком озёр.
+ * <p>
+ * Обеспечивает взаимодействие с пользователем через консольное меню,
+ * включая создание, отображение, редактирование и анализ данных об озёрах.
+ * </p>
  */
 public class UI {
+    /**
+     * Сканер для чтения ввода пользователя из стандартного потока ввода.
+     */
     private static final Scanner _in = new Scanner(System.in);
 
     /**
-     * Печатает информацию о лабораторной работе и задании.
+     * Выводит информацию о лабораторной работе и задании.
+     * Отображает номер лабораторной работы, имена студентов и перечень задач.
      */
-    public void printLabInfo(){
+    public void printLabInfo() {
         System.out.println("Лабораторная работа №3");
         System.out.println("Выполнили студенты группы 24ВП1 Глебов Ярослав и Пчелинцев Даниил");
         System.out.println("Задание: " + "\n– определить самое большое озеро;" +
@@ -20,9 +27,12 @@ public class UI {
     }
 
     /**
-     * Отображает меню команд программы.
+     * Отображает главное меню программы с доступными командами.
+     * <p>
+     * Печатает список команд, которые пользователь может выбрать для взаимодействия с приложением.
+     * </p>
      */
-    public void showCommands(){
+    public void showCommands() {
         System.out.println("Меню программы:");
         System.out.println("1 - Создать озеро");
         System.out.println("2 - Вывести все озера");
@@ -34,7 +44,11 @@ public class UI {
     }
 
     /**
-     * Создаёт новое озеро на основе пользовательского ввода.
+     * Создаёт новое озеро на основе данных, введённых пользователем.
+     * <p>
+     * В зависимости от уровня солёности создаёт либо пресное ({@link FreshLake}),
+     * либо солёное ({@link SaltLake}) озеро и добавляет его в общий список.
+     * </p>
      */
     private void createLake() {
         String name = getValidatedString("Введите название озера: ");
@@ -58,15 +72,21 @@ public class UI {
     }
 
     /**
-     * Выводит информацию обо всех озерах в списке.
+     * Выводит информацию обо всех озёрах, хранящихся в системе.
+     * <p>
+     * Использует статический метод {@link Lake#getAll()} для получения строкового представления списка озёр.
+     * </p>
      */
     private void printAllLakes() {
-
         System.out.println(Lake.getAll());
     }
 
     /**
-     * Осуществляет поиск озера по названию и позволяет редактировать его поля.
+     * Выполняет поиск озера по названию и предоставляет пользователю возможность редактирования его полей.
+     * <p>
+     * После нахождения озера отображается меню редактирования, зависящее от типа озера
+     * ({@link FreshLake} или {@link SaltLake}).
+     * </p>
      */
     private void editLake() {
         String name = getValidatedString("Введите название озера для поиска: ");
@@ -86,7 +106,7 @@ public class UI {
             System.out.println("1 - Название");
             System.out.println("2 - Площадь");
             System.out.println("3 - Процент солёности");
-            if (lake instanceof FreshLake){
+            if (lake instanceof FreshLake) {
                 System.out.println("4 - Количество видов рыб");
                 System.out.println("5 - Наличие рыболовной индустрии");
             } else if (lake instanceof SaltLake) {
@@ -128,7 +148,6 @@ public class UI {
                         ((SaltLake) lake).setHasSaltIndustry(newHasSaltIndustry);
                     }
                 }
-
                 case 0 -> System.out.println("Редактирование завершено.");
                 default -> System.out.println("Неверный выбор.");
             }
@@ -141,7 +160,14 @@ public class UI {
         } while (choice != 0);
     }
 
-    public void run(){
+    /**
+     * Запускает основной цикл программы.
+     * <p>
+     * Инициализирует список озёр тестовыми данными, выводит информацию о лабораторной работе
+     * и предоставляет пользователю интерактивное меню до тех пор, пока не будет выбран выход.
+     * </p>
+     */
+    public void run() {
         Lake.addLake(new Lake("Байкал", 31722, 0.1));
         Lake.addLake(new FreshLake("Онежское", 9720, 0.1, 45, true));
         Lake.addLake(new SaltLake("Мертвое море", 810, 34.2, 1200000, true));
@@ -170,6 +196,12 @@ public class UI {
         _in.close();
     }
 
+    /**
+     * Получает от пользователя непустую строку, не состоящую только из цифр.
+     *
+     * @param message текст приглашения для ввода
+     * @return валидная строка
+     */
     private String getValidatedString(String message) {
         while (true) {
             System.out.print(message);
@@ -182,6 +214,12 @@ public class UI {
         }
     }
 
+    /**
+     * Получает от пользователя целое число.
+     *
+     * @param message текст приглашения для ввода
+     * @return целое число
+     */
     private int getValidatedInt(String message) {
         while (true) {
             System.out.print(message);
@@ -194,6 +232,12 @@ public class UI {
         }
     }
 
+    /**
+     * Получает от пользователя положительное целое число.
+     *
+     * @param message текст приглашения для ввода
+     * @return положительное целое число
+     */
     private int getValidatedPositiveInt(String message) {
         while (true) {
             System.out.print(message);
@@ -206,6 +250,12 @@ public class UI {
         }
     }
 
+    /**
+     * Получает от пользователя вещественное число.
+     *
+     * @param message текст приглашения для ввода
+     * @return вещественное число
+     */
     private double getValidatedDouble(String message) {
         while (true) {
             System.out.print(message);
@@ -218,6 +268,12 @@ public class UI {
         }
     }
 
+    /**
+     * Получает от пользователя значение солёности в допустимом диапазоне [0, 100].
+     *
+     * @param message текст приглашения для ввода
+     * @return значение солёности (в процентах)
+     */
     private double getValidatedSalinity(String message) {
         while (true) {
             System.out.print(message);
@@ -230,6 +286,12 @@ public class UI {
         }
     }
 
+    /**
+     * Получает от пользователя неотрицательное вещественное число.
+     *
+     * @param message текст приглашения для ввода
+     * @return неотрицательное вещественное число
+     */
     private double getValidatedNonNegativeDouble(String message) {
         while (true) {
             System.out.print(message);
@@ -242,6 +304,12 @@ public class UI {
         }
     }
 
+    /**
+     * Получает от пользователя логическое значение в виде "да"/"нет".
+     *
+     * @param message текст приглашения для ввода
+     * @return {@code true}, если введено "да"; {@code false}, если "нет"
+     */
     private boolean getValidatedBoolean(String message) {
         while (true) {
             System.out.print(message);
@@ -254,6 +322,12 @@ public class UI {
         }
     }
 
+    /**
+     * Получает от пользователя номер команды меню (целое число от 0 до 6).
+     *
+     * @param message текст приглашения для ввода
+     * @return номер команды
+     */
     private int getMenuChoice(String message) {
         while (true) {
             System.out.print(message);
@@ -264,5 +338,4 @@ public class UI {
             System.out.print("Некорректный ввод. Введите число от 0 до 6. ");
         }
     }
-
 }
