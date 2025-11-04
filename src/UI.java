@@ -55,20 +55,22 @@ public class UI {
         int area = getValidatedPositiveInt("Введите площадь (км²): ");
         double salinity = getValidatedSalinity("Введите соленость воды (%): ");
 
-        Lake lake;
         if (salinity > 1.0) {
             double saltProduction = getValidatedNonNegativeDouble("Введите годовую добычу соли: ");
             boolean hasSaltIndustry = getValidatedBoolean("Имеет соледобывающую индустрию (да/нет): ");
-            lake = new SaltLake(name, area, salinity, saltProduction, hasSaltIndustry);
-            System.out.println("Создано солёное озеро");
+            if (SaltLake.createSaltLake(name, area, salinity, saltProduction, hasSaltIndustry)) {
+                System.out.println("Создано солёное озеро");
+                System.out.println("Озеро успешно добавлено!");
+            }
+
         } else {
             int fishSpeciesCount = getValidatedPositiveInt("Введите количество видов рыб: ");
             boolean hasFishIndustry = getValidatedBoolean("Имеет рыболовную индустрию (да/нет): ");
-            lake = new FreshLake(name, area, salinity, fishSpeciesCount, hasFishIndustry);
-            System.out.println("Создано пресное озеро");
+            if (FreshLake.createFreshLake(name, area, salinity, fishSpeciesCount, hasFishIndustry)) {
+                System.out.println("Создано пресное озеро");
+                System.out.println("Озеро успешно добавлено!");
+            }
         }
-        Lake.addLake(lake);
-        System.out.println("Озеро успешно добавлено!");
     }
 
     /**

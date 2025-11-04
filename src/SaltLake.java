@@ -75,4 +75,10 @@ public class SaltLake extends Lake {
         return super.getInfo() + ", годовая добыча соли: " + saltProduction +
                 ", имеет соледобывающую индустрию: " + (hasSaltIndustry ? "да" : "нет");
     }
+
+    public static boolean createSaltLake(String name, int area, double salinity, double saltProduction, boolean hasSaltIndustry) {
+        SaltLake newLake = new SaltLake(name, area, salinity, saltProduction, hasSaltIndustry);
+        Lake.addLake(newLake);
+        return true;
+    }
 }

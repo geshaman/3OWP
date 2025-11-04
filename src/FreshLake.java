@@ -66,4 +66,10 @@ class FreshLake extends Lake {
         return super.getInfo() + ", видов рыб: " + fishSpeciesCount +
                 ", имеет рыболовную индустрию: " + (hasFishingIndustry ? "да" : "нет");
     }
+
+    public static boolean createFreshLake(String name, int area, double salinity, int fishSpeciesCount, boolean hasFishingIndustry) {
+        FreshLake newLake = new FreshLake(name, area, salinity, fishSpeciesCount, hasFishingIndustry);
+        Lake.addLake(newLake);
+        return true;
+    }
 }

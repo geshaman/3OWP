@@ -186,4 +186,9 @@ class Lake {
         return null;
     }
 
+    public static boolean createLake(String name, int area, double salinity) {
+        Lake newLake = new Lake(name, area, salinity);
+        Lake.addLake(newLake);
+        return true;
+    }
 }
