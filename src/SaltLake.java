@@ -2,8 +2,8 @@
  * Класс SaltLake представляет собой солёное озеро с возможностью добычи соли.
  */
 public class SaltLake extends Lake {
-    private double saltProduction;
-    private boolean hasSaltIndustry;
+    private double saltProduction;      // Годовая добыча соли (тонн)
+    private boolean hasSaltIndustry;    // Наличие соледобывающей индустрии
 
     /**
      * Конструктор по умолчанию.
@@ -76,6 +76,16 @@ public class SaltLake extends Lake {
                 ", имеет соледобывающую индустрию: " + (hasSaltIndustry ? "да" : "нет");
     }
 
+    /**
+     * Создает солёное озеро и добавляет его в коллекцию
+     *
+     * @param name название озера
+     * @param area площадь озера
+     * @param salinity процент солёности озера
+     * @param saltProduction годовое производство соли
+     * @param hasSaltIndustry наличие соледобывающей индустрии
+     * @return true - если солёное озеро успешно создано и добавлено в коллекцию
+     */
     public static boolean createSaltLake(String name, int area, double salinity, double saltProduction, boolean hasSaltIndustry) {
         SaltLake newLake = new SaltLake(name, area, salinity, saltProduction, hasSaltIndustry);
         Lake.addLake(newLake);

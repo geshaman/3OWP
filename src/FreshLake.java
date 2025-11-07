@@ -2,8 +2,8 @@
  * Класс пресных озёр, наследует от класса Lake.
  */
 class FreshLake extends Lake {
-    private int fishSpeciesCount;
-    private boolean hasFishingIndustry;
+    private int fishSpeciesCount;          // Количество видов рыб в озере
+    private boolean hasFishingIndustry;    // Наличие рыболовной индустрии
 
     /**
      * Конструктор класса по умолчанию.
@@ -67,6 +67,16 @@ class FreshLake extends Lake {
                 ", имеет рыболовную индустрию: " + (hasFishingIndustry ? "да" : "нет");
     }
 
+    /**
+     * Создает новый пресное озеро и добавляет его в коллекцию
+     *
+     * @param name название озера
+     * @param area площадь озера
+     * @param salinity процент солёности озера
+     * @param fishSpeciesCount количество видов рыб в озере
+     * @param hasFishingIndustry наличие рыболовной индустрии
+     * @return true - если пресное озеро успешно создано и добавлено в коллекцию
+     */
     public static boolean createFreshLake(String name, int area, double salinity, int fishSpeciesCount, boolean hasFishingIndustry) {
         FreshLake newLake = new FreshLake(name, area, salinity, fishSpeciesCount, hasFishingIndustry);
         Lake.addLake(newLake);

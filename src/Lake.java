@@ -6,9 +6,9 @@ import java.util.Comparator;
  */
 class Lake {
     private static final ArrayList<Lake> lakes = new ArrayList<>();
-    protected String name;
-    protected int area;
-    protected double salinity;
+    protected String name;     // Название озера
+    protected int area;        // Площадь озера (км²)
+    protected double salinity; // Солёность озера (%)
 
     /**
      * Конструктор класса по умолчанию.
@@ -22,7 +22,7 @@ class Lake {
     /**
      * Параметризированный Конструктор класса.
      *
-     * @param name              Название объекта
+     * @param name              Название озера
      * @param area              Площадь (км^2)
      * @param salinity          Соленость (%)
      */
@@ -33,14 +33,14 @@ class Lake {
     }
 
     /**
-     * Возвращает название географического объекта.
+     * Возвращает название озера.
      *
      * @return название
      */
     public String getName() { return name; }
 
     /**
-     * Возвращает площадь объекта.
+     * Возвращает площадь озера.
      *
      * @return площиадь в квадратных километрах
      */
@@ -73,7 +73,7 @@ class Lake {
     }
 
     /**
-     * Устанавливает новую максимальную глубину объекта.
+     * Устанавливает новую максимальную глубину озера.
      *
      * @param salinity новое значение солёности
      */
@@ -186,6 +186,14 @@ class Lake {
         return null;
     }
 
+    /**
+     * Создает озеро и добавляет его в коллекцию
+     *
+     * @param name название озера
+     * @param area площадь озера
+     * @param salinity процент солёности озера
+     * @return true - если озеро успешно создано и добавлено в коллекцию
+     */
     public static boolean createLake(String name, int area, double salinity) {
         Lake newLake = new Lake(name, area, salinity);
         Lake.addLake(newLake);
